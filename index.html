@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sapaly Education - Университеты Испании</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1E88E5 0%, #1565C0 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header .subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .header .contacts {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .contact-item a:hover {
+            opacity: 0.8;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            padding: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #1E88E5 0%, #1565C0 100%);
+            color: white;
+        }
+
+        th {
+            padding: 18px 15px;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 13px;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        tbody tr {
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #E3F2FD !important;
+            transform: scale(1.01);
+            box-shadow: 0 4px 12px rgba(30, 136, 229, 0.2);
+        }
+
+        td {
+            padding: 16px 15px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #e0e0e0;
+        }
+
+        .university-name {
+            font-weight: 600;
+            color: #1565C0;
+            text-align: left;
+        }
+
+        .country {
+            font-weight: 500;
+            color: #424242;
+        }
+
+        .city {
+            color: #616161;
+        }
+
+        .price {
+            font-weight: 700;
+            color: #2e7d32;
+            font-size: 15px;
+        }
+
+        .percentage {
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 13px;
+        }
+
+        .percentage.high {
+            background: #c8e6c9;
+            color: #1b5e20;
+        }
+
+        .percentage.medium {
+            background: #fff9c4;
+            color: #f57f17;
+        }
+
+        .percentage.low {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+
+        .financial-aid {
+            font-weight: 600;
+            color: #1976d2;
+        }
+
+        .notes {
+            text-align: left;
+            color: #424242;
+            line-height: 1.5;
+            max-width: 400px;
+        }
+
+        .website-link {
+            color: #1E88E5;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .website-link:hover {
+            color: #1565C0;
+            text-decoration: underline;
+            transform: translateY(-2px);
+        }
+
+        .application-info {
+            text-align: left;
+            color: #424242;
+            line-height: 1.6;
+            max-width: 400px;
+            font-size: 13px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin: 2px;
+        }
+
+        .badge.private {
+            background: #e1bee7;
+            color: #4a148c;
+        }
+
+        .badge.public {
+            background: #b3e5fc;
+            color: #01579b;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 25px;
+            text-align: center;
+            color: #616161;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+            tbody tr:hover {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            .header .contacts {
+                flex-direction: column;
+                gap: 15px;
+            }
+            th, td {
+                padding: 10px 8px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Аналитический обзор и стратегия</h1>
+            <div class="subtitle">
+                <strong>SAPALY EDUCATION</strong><br><br>
+                Приветствуем! Эта таблица — результат экспертной аналитики Sapaly Education. 
+                Мы разрабатываем индивидуальные и <strong>гарантированные стратегии поступления</strong> 
+                для студентов из Казахстана и всего СНГ в ведущие университеты 
+                <strong>Америки, Европы и Азии</strong>. Наша цель — обеспечить ваше зачисление 
+                в сильный вуз мира с максимальной финансовой поддержкой.
+            </div>
+            <div class="contacts">
+                <div class="contact-item">
+                    <span>📱</span>
+                    <a href="https://instagram.com/sapaly.education" target="_blank">@sapaly.education</a>
+                </div>
+                <div class="contact-item">
+                    <span>💬</span>
+                    <a href="https://wa.me/77773133500" target="_blank">+7 777 313 3500</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Университет</th>
+                        <th>Страна</th>
+                        <th>Город</th>
+                        <th>Стоимость обучения<br>(USD/год)</th>
+                        <th>Процент<br>поступления</th>
+                        <th>Максимальная<br>фин. помощь (USD)</th>
+                        <th>Примечания</th>
+                        <th>Сайт<br>университета</th>
+                        <th>Как подать заявку</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="university-name"><span class="badge private">Частный</span> IE University</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Мадрид/Сеговия</td>
+                        <td class="price">$26,000</td>
+                        <td><span class="percentage low">35%</span></td>
+                        <td class="financial-aid">$15,000</td>
+                        <td class="notes">Обучение на англ., топовый нетворкинг</td>
+                        <td><a href="https://www.ie.edu" target="_blank" class="website-link">www.ie.edu</a></td>
+                        <td class="application-info">Онлайн-заявка через сайт университета. Требуется мотивационное письмо, рекомендации, языковой сертификат (IELTS/TOEFL). Собеседование.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge private">Частный</span> ESADE Business School</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Барселона</td>
+                        <td class="price">$22,000</td>
+                        <td><span class="percentage low">30%</span></td>
+                        <td class="financial-aid">$10,000</td>
+                        <td class="notes">Лидер в бизнес-образовании, сложно поступить</td>
+                        <td><a href="https://www.esade.edu" target="_blank" class="website-link">www.esade.edu</a></td>
+                        <td class="application-info">Прямая заявка через сайт. Нужны: транскрипты, GMAT/GRE (для магистратуры), эссе, рекомендации, интервью.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge private">Частный</span> University of Navarra</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Памплона</td>
+                        <td class="price">$18,000</td>
+                        <td><span class="percentage medium">60%</span></td>
+                        <td class="financial-aid">$5,000</td>
+                        <td class="notes">Лучший частный вуз, сильная медицина и бизнес</td>
+                        <td><a href="https://www.unav.edu" target="_blank" class="website-link">www.unav.edu</a></td>
+                        <td class="application-info">Онлайн-портал приема. Документы: аттестат, языковой сертификат, мотивационное письмо. Вступительные экзамены для медицины.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge private">Частный</span> EU Business School</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Барселона</td>
+                        <td class="price">$14,000</td>
+                        <td><span class="percentage high">80%</span></td>
+                        <td class="financial-aid">$2,000</td>
+                        <td class="notes">Легкое поступление, обучение на английском</td>
+                        <td><a href="https://www.euruni.edu" target="_blank" class="website-link">www.euruni.edu</a></td>
+                        <td class="application-info">Простая онлайн-заявка. Минимальные требования: аттестат, IELTS 6.0+, мотивационное письмо. Быстрое рассмотрение.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge public">Гос.</span> Autonomous Univ. of Madrid</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Мадрид</td>
+                        <td class="price">$3,000</td>
+                        <td><span class="percentage medium">70%</span></td>
+                        <td class="financial-aid">$0</td>
+                        <td class="notes">Топовый гос. вуз, сильная физика и право</td>
+                        <td><a href="https://www.uam.es" target="_blank" class="website-link">www.uam.es</a></td>
+                        <td class="application-info">UNEDasiss (для иностранцев) или прямая заявка. Требуется: Credencial de Acceso, языковой сертификат DELE/IELTS, нострификация документов.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge public">Гос.</span> Complutense Univ. of Madrid</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Мадрид</td>
+                        <td class="price">$3,500</td>
+                        <td><span class="percentage medium">75%</span></td>
+                        <td class="financial-aid">$0</td>
+                        <td class="notes">Один из старейших, огромный кампус</td>
+                        <td><a href="https://www.ucm.es" target="_blank" class="website-link">www.ucm.es</a></td>
+                        <td class="application-info">Через UNEDasiss или портал университета. Credencial de Acceso, нострификация, языковой сертификат. Высокий конкурс на популярные специальности.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge public">Гос.</span> Charles III Univ. of Madrid</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Мадрид</td>
+                        <td class="price">$4,000</td>
+                        <td><span class="percentage low">45%</span></td>
+                        <td class="financial-aid">$1,000</td>
+                        <td class="notes">Лучший гос. вуз по экономике и бизнесу</td>
+                        <td><a href="https://www.uc3m.es" target="_blank" class="website-link">www.uc3m.es</a></td>
+                        <td class="application-info">Онлайн-заявка через портал. UNEDasiss для бакалавриата. Требуется: Credencial, языковой сертификат, мотивационное письмо (для некоторых программ).</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge public">Гос.</span> Polytechnic Univ. of Madrid</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Мадрид</td>
+                        <td class="price">$3,000</td>
+                        <td><span class="percentage medium">65%</span></td>
+                        <td class="financial-aid">$0</td>
+                        <td class="notes">Главный технический вуз (инженерия/архитектура)</td>
+                        <td><a href="https://www.upm.es" target="_blank" class="website-link">www.upm.es</a></td>
+                        <td class="application-info">UNEDasiss + вступительные экзамены (Pruebas de Acceso). Высокие требования по математике и физике. Портфолио для архитектуры.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge public">Гос.</span> University of Barcelona</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Барселона</td>
+                        <td class="price">$3,500</td>
+                        <td><span class="percentage medium">75%</span></td>
+                        <td class="financial-aid">$0</td>
+                        <td class="notes">№1 в рейтингах Испании, нужен каталанский/испанский</td>
+                        <td><a href="https://www.ub.edu" target="_blank" class="website-link">www.ub.edu</a></td>
+                        <td class="application-info">UNEDasiss или прямая заявка. Credencial de Acceso, нострификация, языковой сертификат (испанский/каталанский). Высокий конкурс.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge public">Гос.</span> Pompeu Fabra University</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Барселона</td>
+                        <td class="price">$4,500</td>
+                        <td><span class="percentage low">40%</span></td>
+                        <td class="financial-aid">$0</td>
+                        <td class="notes">Маленький, но элитный гос. вуз (эконом/право)</td>
+                        <td><a href="https://www.upf.edu" target="_blank" class="website-link">www.upf.edu</a></td>
+                        <td class="application-info">Онлайн-портал. UNEDasiss обязателен. Высокие требования: средний балл 9.0+, языковой сертификат, мотивационное письмо. Очень конкурентный отбор.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge public">Гос.</span> Autonomous Univ. of Barcelona</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Барселона</td>
+                        <td class="price">$3,500</td>
+                        <td><span class="percentage medium">70%</span></td>
+                        <td class="financial-aid">$0</td>
+                        <td class="notes">Кампусного типа, сильная ветеринария и био</td>
+                        <td><a href="https://www.uab.cat" target="_blank" class="website-link">www.uab.cat</a></td>
+                        <td class="application-info">UNEDasiss + вступительные экзамены. Credencial, нострификация, языковой сертификат. Дополнительные тесты для ветеринарии и медицины.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge public">Гос.</span> Polytechnic Univ. of Catalonia</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Барселона</td>
+                        <td class="price">$3,800</td>
+                        <td><span class="percentage medium">60%</span></td>
+                        <td class="financial-aid">$0</td>
+                        <td class="notes">Сильнейший в IT и архитектуре</td>
+                        <td><a href="https://www.upc.edu" target="_blank" class="website-link">www.upc.edu</a></td>
+                        <td class="application-info">UNEDasiss + Pruebas de Acceso. Высокие требования по математике. Портфолио для архитектуры. Онлайн-заявка через портал.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge public">Гос.</span> University of Valencia</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Валенсия</td>
+                        <td class="price">$2,500</td>
+                        <td><span class="percentage high">80%</span></td>
+                        <td class="financial-aid">$0</td>
+                        <td class="notes">Дешевая жизнь в городе, старинный вуз</td>
+                        <td><a href="https://www.uv.es" target="_blank" class="website-link">www.uv.es</a></td>
+                        <td class="application-info">UNEDasiss или прямая заявка. Credencial, нострификация, языковой сертификат. Менее конкурентный, чем вузы Мадрида/Барселоны.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge public">Гос.</span> Polytechnic Univ. of Valencia</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Валенсия</td>
+                        <td class="price">$2,800</td>
+                        <td><span class="percentage medium">70%</span></td>
+                        <td class="financial-aid">$0</td>
+                        <td class="notes">Отличный вариант для инженеров</td>
+                        <td><a href="https://www.upv.es" target="_blank" class="website-link">www.upv.es</a></td>
+                        <td class="application-info">UNEDasiss + вступительные экзамены. Онлайн-портал. Требования по математике и физике. Портфолио для архитектуры.</td>
+                    </tr>
+                    <tr>
+                        <td class="university-name"><span class="badge public">Гос.</span> University of Granada</td>
+                        <td class="country">Испания</td>
+                        <td class="city">Гранада</td>
+                        <td class="price">$2,000</td>
+                        <td><span class="percentage high">85%</span></td>
+                        <td class="financial-aid">$0</td>
+                        <td class="notes">Самый дешевый студенческий город, сильный по языкам</td>
+                        <td><a href="https://www.ugr.es" target="_blank" class="website-link">www.ugr.es</a></td>
+                        <td class="application-info">UNEDasiss или прямая заявка. Credencial, нострификация, языковой сертификат. Самый доступный вариант по стоимости и требованиям.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p><strong>Sapaly Education</strong> - Ваш путь к лучшему образованию</p>
+            <p>📱 Instagram: <a href="https://instagram.com/sapaly.education" target="_blank" style="color: #1E88E5; text-decoration: none;">@sapaly.education</a> | 💬 WhatsApp: <a href="https://wa.me/77773133500" target="_blank" style="color: #1E88E5; text-decoration: none;">+7 777 313 3500</a></p>
+            <p style="margin-top: 10px; font-size: 12px; opacity: 0.7;">© 2025 Sapaly Education. Все права защищены.</p>
+        </div>
+    </div>
+</body>
+</html>
+
